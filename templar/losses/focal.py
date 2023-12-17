@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from register import register_criterion
+from .register import register_criterion
 
 @register_criterion("Focalloss")
 class FocalLoss(nn.Module):
