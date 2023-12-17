@@ -1,4 +1,6 @@
 import torch
+from torch.utils.data import DataLoader
+
 import timm
 
 import os
@@ -16,6 +18,8 @@ from sklearn.model_selection import train_test_split
 from utils import seed_everything
 from losses import create_criterion
 from optimizers import create_optimizer
+from augmentation import *
+from datasets import *
 
 import warnings 
 warnings.filterwarnings('ignore')
@@ -170,9 +174,12 @@ def run_train():
     print(f'Train len : {len(train_df)}')
     print(f'Val len : {len(val_df)}')
 
-    """
-    To Do 1. : dataset
-    """
+    #if your df has not 'path', 'label' columns -> (if other names) you must input 'info = {'path' : your image path columns, 'label' : your label columns}
+    train_dataset = CustomDataset(train_df, BaseAug(resize=config['train']['augmentation']['input_size']))
+    val_dataset = CustomDataset(val_df, BaseAug(resize=config['val']['augmentation']['input_size']))
+    
+    train_loader = DataLoader(train_dataset, batch_size=config['train']['batch_size'])
+    val_loader = DataLoader(val_dataset, batch_size=config['val']['batch_size'])
 
     model = timm.create_model(
                             config['model']['model_name'],
