@@ -1,0 +1,50 @@
+data:
+  spit: True # spliting of data train/val : if True train loops split, else csv or folder make val data
+
+  train_csv : '' # train csv path
+  val_csv : ''
+  test_csv : '' # test csv path
+
+
+model:
+  model_name : 'Model Name'
+  classes_num : 2
+
+setting:
+  early_stopping : True
+  patience : 5 
+
+train:
+  exp: 'exp_1' # it save name
+  seed: 42
+  loss : 'cross_entropy'
+  optimizer : 'Adam'
+  scheduler : 
+    name: 'StepLR'
+    step_size: 10,
+    gamma: 0.1
+  lr : 0.0001
+  batch_size : 32
+  epochs : 100
+  middle_term : 100 # it return loss for 1 epoch
+  
+  augmentation : 
+    input_size : 224
+  
+val:
+  batch_size: 100
+
+  augmentation :
+    input_size : 224
+
+test:
+  batch_size: 100
+
+  augmentation : 
+    input_size : 224
+
+
+save: 'checkpoints/' # save path
+
+
+
